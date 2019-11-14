@@ -1,5 +1,8 @@
 service: bliblou-recipes-api
 
+package:
+  individually: true
+
 plugins:
   - serverless-python-requirements
 
