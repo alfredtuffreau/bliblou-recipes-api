@@ -20,8 +20,7 @@
   },
   "homepage": "https://github.com/AnomalyInnovations/serverless-stack-python-starter#readme",
   "dependencies": {
-    "serverless-python-requirements": "^3.0.9",
-    "uuid": "^3.3.3"
+    "serverless-python-requirements": "^3.0.9"
   },
   "devDependencies": {
     "aws-sdk": "^2.571.0"

@@ -1,0 +1,15 @@
+{
+  "title": "",
+  "description": "",
+  "durations": {
+    "preparation": 0,
+    "cookingAfterPreparation": 0,
+    "resting": {
+      "before": 0,
+      "after": 0
+    }
+  },
+  "nbOfPeople": 0,
+  "steps": [],
+  "suggestions": []
+}

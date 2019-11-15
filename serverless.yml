@@ -13,13 +13,29 @@ custom:
 provider:
   name: aws
   runtime: python3.6
-  stage: dev
-  region: us-east-1
+  stage: prod
+  region: eu-west-1
+  environment:
+    tableName: recipes
+    tableRegion: eu-west-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:eu-west-1:685910104720:table/recipes"
 
 functions:
-  hello:
-    handler: handler.hello
+  create:
+    handler: create.main
     events:
       - http:
-          path: /
-          method: get
+          path: recipes
+          method: post
+          cors: true
+          authorizer: aws_iam
