@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append("%s/recipes" % (os.getcwd()))
+sys.path.append("%s/recipes-api" % (os.getcwd()))
 
 import uuid
 import json
