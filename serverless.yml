@@ -32,7 +32,7 @@ provider:
 
 functions:
   create:
-    handler: create.main
+    handler: recipes/create.main
     events:
       - http:
           path: recipes
