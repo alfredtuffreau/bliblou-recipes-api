@@ -1,7 +1,8 @@
 import boto3
+from boto3.dynamodb.conditions import Key
 
-def call(action, tableName, item, region):
+def call(region, tableName, action, **kwargs):
   dynamodb = boto3.resource("dynamodb", region_name=region)
   table = dynamodb.Table(tableName)
-  
-  getattr(table, action)(Item=item)
+
+  return getattr(table, action)(**kwargs)

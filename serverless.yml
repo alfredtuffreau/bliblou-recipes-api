@@ -39,3 +39,35 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  get:
+    handler: recipes-api/get.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: get 
+          cors: true
+          authorizer: aws_iam
+  list:
+    handler: recipes-api/list.main
+    events:
+      - http:
+          path: recipes
+          method: get
+          cors: true
+          authorizer: aws_iam
+  update:
+    handler: recipes-api/update.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  delete:
+    handler: recipes-api/delete.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
