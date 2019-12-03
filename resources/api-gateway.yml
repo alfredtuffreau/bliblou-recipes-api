@@ -21,4 +21,4 @@ Outputs:
     Description: API Gateway reference
     Value: !Ref ApiGatewayRestApi
     Export:
-      Name: ApiGatewayRestApi
+      Name: ${self:custom.stage}-ApiGatewayRestApi

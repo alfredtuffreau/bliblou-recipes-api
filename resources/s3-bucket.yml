@@ -30,4 +30,4 @@ Outputs:
     Description: Pictures S3 bucket arn
     Value: !GetAtt PicturesBucket.Arn 
     Export:
-      Name: PicturesBucketArn
+      Name: ${self:custom.stage}-PicturesBucketArn
