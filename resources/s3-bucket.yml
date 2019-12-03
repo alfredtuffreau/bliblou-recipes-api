@@ -31,8 +31,3 @@ Outputs:
     Value: !GetAtt PicturesBucket.Arn 
     Export:
       Name: ${self:custom.stage}-RecipePicturesBucketArn
-  RecipePicturesBucketArnToBeRemoved:
-    Description: Recipe pictures S3 bucket arn to be removed
-    Value: !GetAtt PicturesBucket.Arn 
-    Export:
-      Name: PicturesBucketArn

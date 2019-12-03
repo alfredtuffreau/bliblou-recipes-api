@@ -22,8 +22,3 @@ Outputs:
     Value: !Ref ApiGatewayRestApi
     Export:
       Name: ${self:custom.stage}-RecipesApiGateway
-  ApiGatewayTobeRemoved:
-    Description: API Gateway reference to be removed
-    Value: !Ref ApiGatewayRestApi
-    Export:
-      Name: ApiGatewayRestApi
