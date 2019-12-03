@@ -1,0 +1,33 @@
+Resources:
+  PicturesBucket:
+    Type: AWS::S3::Bucket
+    # DeletionPolicy: ${self:custom.${self:custom.stage}.deletion_policy}
+    Properties:
+      PublicAccessBlockConfiguration: 
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+Outputs:
+  PicturesBucketName:
+    Value: !Ref PicturesBucket
+  PicturesBucketArn:
+    Description: Pictures S3 bucket arn
+    Value: !GetAtt PicturesBucket.Arn 
+    Export:
+      Name: PicturesBucketArn

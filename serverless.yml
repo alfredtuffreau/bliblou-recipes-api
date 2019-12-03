@@ -9,15 +9,23 @@ plugins:
 custom:
   pythonRequirements:
     dockerizePip: false
+  product: bliblou
+  stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-recipes
+  tableRegion: ${self:provider.region}
+  # dev:
+  #   deletion_policy: Delete
+  # prod:
+  #   deletion_policy: Retain
 
 provider:
   name: aws
   runtime: python3.6
-  stage: prod
+  stage: dev
   region: eu-west-1
   environment:
-    tableName: recipes
-    tableRegion: eu-west-1
+    tableName: ${self:custom.tableName}
+    tableRegion: ${self:custom.tableRegion}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -28,7 +36,8 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:eu-west-1:685910104720:table/recipes"
+      Resource:
+        - "Fn::GetAtt": [ RecipesTable, Arn ]
 
 functions:
   create:
@@ -73,4 +82,6 @@ functions:
           authorizer: aws_iam
 
 resources:
-  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/s3-bucket.yml)}
+  - ${file(resources/api-gateway.yml)}

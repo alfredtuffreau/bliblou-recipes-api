@@ -1,0 +1,13 @@
+Resources:
+  RecipesTable:
+    Type: AWS::DynamoDB::Table
+    # DeletionPolicy: ${self:custom.${self:custom.stage}.deletion_policy}
+    Properties:
+      TableName: ${self:custom.tableName}
+      AttributeDefinitions:
+        - AttributeName: recipeId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: recipeId
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST

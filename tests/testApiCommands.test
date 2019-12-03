@@ -1,0 +1,41 @@
+aws cognito-idp sign-up \
+  --region COGNITO_REGION \
+  --client-id COGNITO_APP_CLIENT_ID \
+  --username USER_ADDRESS \
+  --password PASSWORD
+  --user-attributes Name="family_name",Value="Admin" Name="name",Value="Admin" Name="gender",Value="Male"
+
+aws cognito-idp admin-confirm-sign-up \
+  --region COGNITO_REGION \
+  --user-pool-id COGNITO_USER_POOL_ID \
+  --username USER_ADDRESS
+
+aws cognito-idp admin-add-user-to-group \
+  --user-pool-id COGNITO_USER_POOL_ID \
+  --username USER_ADDRESS \
+  --group-name editors
+
+npx aws-api-gateway-cli-test \
+--username=USER_ADDRESS \
+--password=PASSWORD \
+--user-pool-id=COGNITO_USER_POOL_ID \
+--app-client-id=COGNITO_APP_CLIENT_ID \
+--cognito-region=COGNITO_REGION \
+--identity-pool-id=COGNITO_IDENTITY_POOL_ID \
+--invoke-url=API_GATEWAY_INVOKE_URL \
+--api-gateway-region=API_GATEWAY_REGION \
+--path-template='/recipes' \
+--method='POST' \
+--body='{"content":"hello world","picture":"hello.jpg"}'
+
+npx aws-api-gateway-cli-test \
+--username=USER_ADDRESS \
+--password=PASSWORD \
+--user-pool-id=COGNITO_USER_POOL_ID \
+--app-client-id=COGNITO_APP_CLIENT_ID \
+--cognito-region=COGNITO_REGION \
+--identity-pool-id=COGNITO_IDENTITY_POOL_ID \
+--invoke-url=API_GATEWAY_INVOKE_URL \
+--api-gateway-region=API_GATEWAY_REGION \
+--path-template='/recipes' \
+--method='GET'
