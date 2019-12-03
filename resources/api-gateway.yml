@@ -17,11 +17,11 @@ Resources:
       RestApiId: !Ref 'ApiGatewayRestApi'
 
 Outputs:
-  ApiGatewayRestApi:
-    Description: API Gateway reference
+  RecipesApiGateway:
+    Description: Recipes API Gateway reference
     Value: !Ref ApiGatewayRestApi
     Export:
-      Name: ${self:custom.stage}-ApiGatewayRestApi
+      Name: ${self:custom.stage}-RecipesApiGateway
   TobeRemoved:
     Description: API Gateway reference to be removed
     Value: !Ref ApiGatewayRestApi
