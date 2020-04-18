@@ -1,4 +1,4 @@
-def main(event):
+def main(event, context):
   print(event)
   # for record in event["Records"]:
   #   filename = record["s3"]["object"]["key"]
