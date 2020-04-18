@@ -38,13 +38,13 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "Fn::GetAtt": [ RecipesTable, Arn ]
-    # - Effect: Allow
-    #   Action:
-    #     - s3:GetObject
-    #     - s3:PutObject
-    #     - s3:DeleteObject
-    #   Resource:
-    #     - !Ref RecipePicturesBucketArn
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:DeleteObject
+      Resource:
+        - "Fn::GetAtt": [ PicturesBucket, Arn ]
 
 functions:
   create:
