@@ -38,6 +38,13 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "Fn::GetAtt": [ RecipesTable, Arn ]
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:DeleteObject
+      Resource:
+        - !Ref RecipePicturesBucketArn
 
 functions:
   create:
@@ -80,6 +87,22 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
+  addThumbnail:
+    handler: pictures/create-postprocess.main
+    events:
+      - s3:
+          bucket: !Ref PicturesBucketName
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: images/
+  removeThumbnail:
+    handler: pictures/remove-postprocess.main
+    events:
+      - s3:
+          bucket: !Ref PicturesBucketName
+          event: s3:ObjectRemoved:*
+          rules:
+            - prefix: images/
 
 resources:
   - ${file(resources/dynamodb-table.yml)}
