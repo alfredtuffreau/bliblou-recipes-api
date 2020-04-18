@@ -13,7 +13,8 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: ${self:custom.stage}-recipes
   tableRegion: ${self:provider.region}
-  bucket: ${file(resources/refs.yml):picturesBucket}
+  bucket: bliblou-recipes-api-dev-picturesbucket-gx0fpfwx1056
+  # ${file(resources/refs.yml):picturesBucket}
   # dev:
   #   deletion_policy: Delete
   # prod:

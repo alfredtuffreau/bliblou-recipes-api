@@ -1,4 +1,0 @@
-picturesBucket:
-  Fn::Join:
-    - ""
-    - - Ref: PicturesBucket
