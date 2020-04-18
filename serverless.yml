@@ -93,7 +93,7 @@ functions:
     handler: pictures/create-postprocess.main
     events:
       - s3:
-          bucket: ${self:custom.bucket}
+          bucket: !Ref PicturesBucket
           event: s3:ObjectCreated:*
           rules:
             - prefix: public/images/
@@ -102,10 +102,10 @@ functions:
     handler: pictures/remove-postprocess.main
     events:
       - s3:
-          bucket: ${self:custom.bucket}
+          bucket: !Ref PicturesBucket
           event: s3:ObjectRemoved:*
           rules:
-            - prefix: images/
+            - prefix: public/images/
           existing: true
 
 resources:
