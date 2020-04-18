@@ -13,7 +13,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: ${self:custom.stage}-recipes
   tableRegion: ${self:provider.region}
-  bucket: ${cf:PicturesBucketName}
+  bucket: ${self:PicturesBucketName}
   # dev:
   #   deletion_policy: Delete
   # prod:
