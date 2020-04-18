@@ -96,7 +96,7 @@ functions:
           bucket: ${self:custom.bucket}
           event: s3:ObjectCreated:*
           rules:
-            - prefix: images/
+            - prefix: public/images/
           existing: true
   removeThumbnail:
     handler: pictures/remove-postprocess.main
