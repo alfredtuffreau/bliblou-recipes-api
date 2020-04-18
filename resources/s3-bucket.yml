@@ -26,6 +26,8 @@ Resources:
 Outputs:
   PicturesBucketName:
     Value: !Ref PicturesBucket
+    Export:
+      Name: ${self:custom.stage}-PicturesBucketName
   RecipePicturesBucketArn:
     Description: Recipe pictures S3 bucket arn
     Value: !GetAtt PicturesBucket.Arn 
