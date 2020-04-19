@@ -104,7 +104,8 @@ functions:
     events:
       - stream:
           type: dynamodb
-          arn: "Fn::GetAtt": [ RecipesTable, StreamArn ]
+          arn:
+            Fn::GetAtt: [RecipesTable, StreamArn]
   removeThumbnail:
     handler: pictures/remove-postprocess.main
     events:
