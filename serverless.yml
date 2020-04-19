@@ -102,12 +102,9 @@ functions:
   addThumbnail:
     handler: pictures/create-postprocess.main
     events:
-      - s3:
-          bucket: !Ref PicturesBucket
-          event: s3:ObjectCreated:*
-          rules:
-            - prefix: public/images/
-          existing: true
+      - stream:
+          type: dynamodb
+          arn: "Fn::GetAtt": [ RecipesTable, StreamArn ]
   removeThumbnail:
     handler: pictures/remove-postprocess.main
     events:
