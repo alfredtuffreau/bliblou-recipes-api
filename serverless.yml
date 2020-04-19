@@ -99,13 +99,13 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
-  # addThumbnail:
-  #   handler: pictures/create-postprocess.main
-  #   events:
-  #     - stream:
-  #         type: dynamodb
-  #         arn:
-  #           Fn::GetAtt: [RecipesTable, StreamArn]
+  addThumbnail:
+    handler: pictures/create-postprocess.main
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [RecipesTable, StreamArn]
   removeThumbnail:
     handler: pictures/remove-postprocess.main
     events:
