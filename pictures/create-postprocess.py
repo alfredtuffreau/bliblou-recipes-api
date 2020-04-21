@@ -21,6 +21,7 @@ def main(event, context):
     eventName = record["eventName"]
     recipeId = record["dynamodb"]["Keys"]["recipeId"]["S"]
 
+    addedThumbnails = []
     if eventName == "INSERT" and "NULL" not in record["dynamodb"]["NewImage"]["picture"]:
       picture = "public/%s" % record["dynamodb"]["NewImage"]["picture"]["S"]
       print("%s - %s: Creating thumbnails for recipe %s." % (eventId, eventName, recipeId))
@@ -37,16 +38,17 @@ def main(event, context):
         else:
           width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
         
-        addedThumbnails = []
         while width < im.width and height < im.height:
           print("Create %d x %d thumbnail" % (width, height))
           thumbnail = file + "_%dx%d.jpeg" % (width, height)
-          im.resize((width, height), Image.ANTIALIAS).save(thumbnail, "JPEG", quality=90)
+          localPath = "/tmp/%s" % thumbnail
+          im.resize((width, height), Image.ANTIALIAS).save(localPath, "JPEG", quality=90)
 
-          with open(thumbnail, "rb") as f:
+          with open(localPath, "rb") as f:
             print("Uploading %s to thumbnails/ in %s" % (thumbnail, bucket))
-            s3.meta.client.upload_fileobj(f, bucket, "public/thumbnails/%s" % thumbnail)
-            addedThumbnails.append("thumbnails/%s" % thumbnail)
+            s3Path = "thumbnails/%s" % thumbnail
+            s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+            addedThumbnails.append(s3Path)
 
           width, height = width * 2, height * 2
 
