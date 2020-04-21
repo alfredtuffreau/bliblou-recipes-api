@@ -57,11 +57,7 @@ provider:
       Action:
         - s3:*
       Resource:
-        - Fn::Join:
-          - "/"
-          - - Fn::GetAtt: [ PicturesBucket, Arn ]
-            - "*"
-        # - "Fn::GetAtt": [ PicturesBucket, Arn ]
+        - Fn::GetAtt: [ PicturesBucket, Arn ]
 
 functions:
   create:
