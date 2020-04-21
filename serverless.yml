@@ -63,7 +63,7 @@ provider:
         - Fn::Join:
           - "/"
           - - Fn::GetAtt: [ PicturesBucket, Arn ]
-            - *
+            - "*"
 
 functions:
   create:
