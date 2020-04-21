@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-sys.path.append("%s/recipes-api" % (os.getcwd()))
+sys.path.append("%s/utils" % (os.getcwd()))
 import response
 import dynamodb 
 

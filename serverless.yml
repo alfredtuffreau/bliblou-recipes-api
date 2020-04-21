@@ -13,7 +13,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: ${self:custom.stage}-recipes
   tableRegion: ${self:provider.region}
-  bucket: bliblou-recipes-api-dev-picturesbucket-gx0fpfwx1056
+  bucket: !Ref PicturesBucket 
   # ${file(resources/refs.yml):picturesBucket}
   # dev:
   #   deletion_policy: Delete
@@ -28,6 +28,9 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     tableRegion: ${self:custom.tableRegion}
+    bucket: ${self:custom.bucket}
+    thumbnailWidth: 287
+    thumbnailHeight: 136
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -110,7 +113,7 @@ functions:
     handler: pictures/remove-postprocess.main
     events:
       - s3:
-          bucket: !Ref PicturesBucket
+          bucket: ${self:custom.bucket}
           event: s3:ObjectRemoved:*
           rules:
             - prefix: public/images/
