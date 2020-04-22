@@ -11,5 +11,6 @@ Resources:
         - AttributeName: recipeId
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification: true
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES

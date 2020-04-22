@@ -1,0 +1,54 @@
+{
+  "Records": [
+    {
+      "eventID": "ef21f6bb4bc1436ce41b43b498af42d2",
+      "eventName": "MODIFY",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "eu-west-1",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1587565884,
+        "Keys": {
+          "recipeId": {
+            "S": "2bdef4c8-1e04-4aa1-a5f5-08c892238064"
+          }
+        },
+        "NewImage": {
+          "createdAt": {
+            "S": "2020-04-22 14:31:08.071207"
+          },
+          "content": {
+            "S": "{\n  'title': 'update: old no image & new no image',\n  'description': 'Updating',\n  'durations': {\n    'before': {\n      'preparation': 0,\n      'cookingAfterPreparation': 0,\n      'resting': 0\n    },\n    'preparation': 0,\n    'cookingAfterPreparation': 0,\n    'resting': 0\n  },\n  'nbOfPeople': 0,\n  'courses': [ 'appetizer', 'entree', 'salad', 'main_course', 'side', 'sauce', 'dessert'],\n  'ingredients': [],\n  'steps': [],\n  'advices': [],\n  'status': 'new'\n}"
+          },
+          "picture": {
+            "NULL": true
+          },
+          "recipeId": {
+            "S": "2bdef4c8-1e04-4aa1-a5f5-08c892238064"
+          },
+          "updatedAt": {
+            "S": "2020-04-22 14:31:24.387246"
+          }
+        },
+        "OldImage": {
+          "createdAt": {
+            "S": "2020-04-22 14:31:08.071207"
+          },
+          "content": {
+            "S": "{\n  'title': 'update: old no image & new no image',\n  'description': '',\n  'durations': {\n    'before': {\n      'preparation': 0,\n      'cookingAfterPreparation': 0,\n      'resting': 0\n    },\n    'preparation': 0,\n    'cookingAfterPreparation': 0,\n    'resting': 0\n  },\n  'nbOfPeople': 0,\n  'courses': [ 'appetizer', 'entree', 'salad', 'main_course', 'side', 'sauce', 'dessert'],\n  'ingredients': [],\n  'steps': [],\n  'advices': [],\n  'status': 'new'\n}"
+          },
+          "picture": {
+            "NULL": true
+          },
+          "recipeId": {
+            "S": "2bdef4c8-1e04-4aa1-a5f5-08c892238064"
+          }
+        },
+        "SequenceNumber": "610731400000000006127513711",
+        "SizeBytes": 1179,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:eu-west-1:685910104720:table/dev-recipes/stream/2020-04-22T09:40:09.841"
+    }
+  ]
+}

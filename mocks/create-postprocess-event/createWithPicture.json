@@ -32,39 +32,6 @@
         "StreamViewType": "NEW_AND_OLD_IMAGES"
       },
       "eventSourceARN": "arn:aws:dynamodb:eu-west-1:685910104720:table/dev-recipes/stream/2020-04-19T11:01:21.653"
-    }, 
-    {
-      "eventID": "b3fda83f66e8f675faeb0593a20fab84",
-      "eventName": "INSERT",
-      "eventVersion": "1.1",
-      "eventSource": "aws:dynamodb",
-      "awsRegion": "eu-west-1",
-      "dynamodb": {
-        "ApproximateCreationDateTime": 1587467349,
-        "Keys": {
-          "recipeId": {
-            "S": "b6862b4e-bc0a-42ce-96a7-53bbb8f8399c"
-          }
-        },
-        "NewImage": {
-          "createdAt": {
-            "S": "2020-04-21 11:09:08.709620"
-          },
-          "content": {
-            "S": "{\n  'title': 'Test without picture',\n  'description': '',\n  'durations': {\n    'before': {\n      'preparation': 0,\n      'cookingAfterPreparation': 0,\n      'resting': 0\n    },\n    'preparation': 0,\n    'cookingAfterPreparation': 0,\n    'resting': 0\n  },\n  'nbOfPeople': 0,\n  'courses': [ 'appetizer', 'entree', 'salad', 'main_course', 'side', 'sauce', 'dessert'],\n  'ingredients': [],\n  'steps': [],\n  'advices': [],\n  'status': 'new'\n}"
-          },
-          "picture": {
-            "NULL": true
-          },
-          "recipeId": {
-            "S": "b6862b4e-bc0a-42ce-96a7-53bbb8f8399c"
-          }
-        },
-        "SequenceNumber": "605332000000000009530232163",
-        "SizeBytes": 575,
-        "StreamViewType": "NEW_AND_OLD_IMAGES"
-      },
-      "eventSourceARN": "arn:aws:dynamodb:eu-west-1:685910104720:table/dev-recipes/stream/2020-04-19T11:01:21.653"
     }
   ]
 }
