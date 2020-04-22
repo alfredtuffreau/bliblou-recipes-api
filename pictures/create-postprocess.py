@@ -53,7 +53,7 @@ def main(event, context):
           width, height = width * 2, height * 2
 
     elif eventName == "MODIFY":
-      print("Update existing")
+      print("Update : %s" % event)
 
     else:
       print("%s - %s: no action required." % (eventId, eventName))
