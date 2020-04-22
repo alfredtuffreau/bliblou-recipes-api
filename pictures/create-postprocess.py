@@ -34,37 +34,34 @@ def main(event, context):
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
           
-        if im.width / im.height >= thumbnailWidth / thumbnailHeight:
-          width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
-        else:
-          width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
-          
-        addedThumbnails = []
-        while width < im.width and height < im.height:
-          print("%s - create %d x %d thumbnail" % (eventId, width, height))
-          thumbnail = file + "_%dx%d.jpeg" % (width, height)
-          localPath = "/tmp/%s" % thumbnail
-          im.resize((width, height), Image.ANTIALIAS).save(localPath, "JPEG", quality=90)
+          if im.width / im.height >= thumbnailWidth / thumbnailHeight:
+            width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
+          else:
+            width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
+            
+          addedThumbnails = []
+          while width < im.width and height < im.height:
+            print("%s - create %d x %d thumbnail" % (eventId, width, height))
+            thumbnail = file + "_%dx%d.jpeg" % (width, height)
+            localPath = "/tmp/%s" % thumbnail
+            im.resize((width, height), Image.ANTIALIAS).save(localPath, "JPEG", quality=90)
 
-          with open(localPath, "rb") as f:
-            print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
-            s3Path = "thumbnails/%s" % thumbnail
-            s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-            addedThumbnails.append(s3Path)
+            with open(localPath, "rb") as f:
+              print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
+              s3Path = "thumbnails/%s" % thumbnail
+              s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+              addedThumbnails.append(s3Path)
 
-          width, height = width * 2, height * 2
+            width, height = width * 2, height * 2
 
-        if addedThumbnails:
-          print("%s - updating recipe %s with added thumbnails %s" % (eventId, recipeId, ", ".join(addedThumbnails)))
-          dynamodb.call(tableRegion, tableName, "update_item", 
-            Key={ "recipeId": recipeId }, 
-            UpdateExpression="SET thumbnails = :thumbnails, updatedAt = :updatedAt", 
-            ExpressionAttributeValues={ 
-              ":thumbnails": addedThumbnails, 
-              ":updatedAt": str(datetime.datetime.now()),
-            }, 
-            ReturnValues="UPDATED_NEW"
-          )
+          if addedThumbnails:
+            print("%s - updating recipe %s with added thumbnails %s" % (eventId, recipeId, ", ".join(addedThumbnails)))
+            dynamodb.call(tableRegion, tableName, "update_item", 
+              Key={ "recipeId": recipeId }, 
+              UpdateExpression="SET thumbnails = :thumbnails, updatedAt = :updatedAt", 
+              ExpressionAttributeValues={ ":thumbnails": addedThumbnails, ":updatedAt": str(datetime.datetime.now()) }, 
+              ReturnValues="UPDATED_NEW"
+            )
 
       else:
         print("%s - no action required." % eventId)
