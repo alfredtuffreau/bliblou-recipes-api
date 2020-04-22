@@ -11,5 +11,5 @@ Resources:
         - AttributeName: recipeId
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
-      # StreamSpecification:
-      #   StreamViewType: NEW_AND_OLD_IMAGES
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
