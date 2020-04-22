@@ -19,6 +19,7 @@ def main(event, context):
   for record in event["Records"]:
     eventId = record["eventID"]
     eventName = record["eventName"]
+    print("Handling event %s: %s" (eventId, record))
 
     try:
       recipeId = record["dynamodb"]["Keys"]["recipeId"]["S"]
