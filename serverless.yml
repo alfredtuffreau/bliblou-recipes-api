@@ -118,7 +118,7 @@ functions:
     events:
       - s3:
           bucket: ${self:custom.bucket}
-          event: s3:ObjectRemoved:*
+          event: s3:ObjectRemoved:Delete
           rules:
             - prefix: public/images/
           existing: true

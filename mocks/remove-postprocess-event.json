@@ -1,0 +1,36 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "eu-west-1",
+      "eventTime": "2020-04-22T16:10:26.664Z",
+      "eventName": "ObjectRemoved:Delete",
+      "userIdentity": {
+        "principalId": "AWS:AROAZ7M3NTKICLEMJHUN6:CognitoIdentityCredentials"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "82.67.1.94"
+      },
+      "responseElements": {
+        "x-amz-request-id": "8361BDDD748C4838",
+        "x-amz-id-2": "m1UMXsh6+TPemtJ9JWZcvJMSqjcj+N++me2yPDr+Nq46GyGDMYL4XlOp955R79mFqrOQTe05biY1oz3phWtdAdaAb2oq1g1t"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "bliblou-recipes-api-dev-removeThumbnail-4186076971b2314b39d2972c0c0b56a1",
+        "bucket": {
+          "name": "bliblou-recipes-api-dev-picturesbucket-gx0fpfwx1056",
+          "ownerIdentity": {
+            "principalId": "A1WASL4ACA6NE6"
+          },
+          "arn": "arn:aws:s3:::bliblou-recipes-api-dev-picturesbucket-gx0fpfwx1056"
+        },
+        "object": {
+          "key": "public/images/1587635110815-1585911657360-5779702E-346B-486D-9A21-73EED20FC509.jpeg",
+          "sequencer": "005EA06C75328DF2A8"
+        }
+      }
+    }
+  ]
+}
