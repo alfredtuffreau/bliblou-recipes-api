@@ -113,15 +113,15 @@ functions:
           type: dynamodb
           arn:
             Fn::GetAtt: [RecipesTable, StreamArn]
-  removeThumbnail:
-    handler: pictures/remove-postprocess.main
-    events:
-      - s3:
-          bucket: ${self:custom.bucket}
-          event: s3:ObjectRemoved:Delete
-          rules:
-            - prefix: public/images/
-          existing: true
+  # removeThumbnail:
+  #   handler: pictures/remove-postprocess.main
+  #   events:
+  #     - s3:
+  #         bucket: ${self:custom.bucket}
+  #         event: s3:ObjectRemoved:Delete
+  #         rules:
+  #           - prefix: public/images/
+  #         existing: true
 
 resources:
   - ${file(resources/dynamodb-table.yml)}
