@@ -1,7 +1,6 @@
 Resources:
   PicturesBucket:
     Type: AWS::S3::Bucket
-    # DeletionPolicy: ${self:custom.${self:custom.stage}.deletion_policy}
     Properties:
       PublicAccessBlockConfiguration: 
         BlockPublicAcls: true
@@ -30,4 +29,4 @@ Outputs:
     Description: Recipe pictures S3 bucket arn
     Value: !GetAtt PicturesBucket.Arn 
     Export:
-      Name: ${self:custom.stage}-RecipePicturesBucketArn
+      Name: ${self:custom.product}-${self:custom.stage}-RecipePicturesBucketArn

@@ -1,7 +1,6 @@
 Resources:
   RecipesTable:
     Type: AWS::DynamoDB::Table
-    # DeletionPolicy: ${self:custom.${self:custom.stage}.deletion_policy}
     Properties:
       TableName: ${self:custom.tableName}
       AttributeDefinitions:

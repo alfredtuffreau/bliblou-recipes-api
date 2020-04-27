@@ -21,4 +21,4 @@ Outputs:
     Description: Recipes API Gateway reference
     Value: !Ref ApiGatewayRestApi
     Export:
-      Name: ${self:custom.stage}-RecipesApiGateway
+      Name: ${self:custom.product}-${self:custom.stage}-RecipesApiGateway
