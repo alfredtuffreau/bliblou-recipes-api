@@ -18,7 +18,7 @@ custom:
 provider:
   name: aws
   runtime: python3.6
-  stage: test
+  stage: dev
   region: eu-west-1
   environment:
     tableName: ${self:custom.tableName}
