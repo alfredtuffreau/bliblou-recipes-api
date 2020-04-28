@@ -1,8 +1,9 @@
 Resources:
   RecipesTable:
     Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
     Properties:
-      TableName: ${self:custom.tableName}
+      TableName: ${self:custom.tableName}-backup-restored
       AttributeDefinitions:
         - AttributeName: recipeId
           AttributeType: S
