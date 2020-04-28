@@ -50,6 +50,11 @@ provider:
         - "Fn::GetAtt": [ RecipesTable, Arn ]
     - Effect: Allow
       Action:
+        - s3:ListBucket
+      Resource:
+        - Fn::GetAtt: [ PicturesBucket, Arn ]
+    - Effect: Allow
+      Action:
         - s3:GetObject
         - s3:PutObject
         - s3:PutObjectAcl
