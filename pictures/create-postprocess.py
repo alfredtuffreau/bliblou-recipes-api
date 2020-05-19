@@ -70,7 +70,7 @@ def main(event, context):
 
             # Enhance contrast after resize
             enhancer = ImageEnhance.Contrast(resized_im)
-            final_im = enhancer.enhance(1.1)
+            final_im = enhancer.enhance(1.3)
 
             # Enhance brightness after resize
             # enhancer = ImageEnhance.Brightness(contrasted_im)
