@@ -66,7 +66,15 @@ def main(event, context):
             print("%s - create %d x %d thumbnail" % (eventId, width, height))
             thumbnail = file + "_%dx%d.jpeg" % (width, height)
             localPath = "/tmp/%s" % thumbnail
-            im.resize((width, height), Image.LANCZOS).save(localPath, "JPEG", quality=100)
+            resized_im = im.resize((width, height), Image.ANTIALIAS)
+
+            # Enhance contrast after resize
+            enhancer = ImageEnhance.Contrast(resized_im)
+            final_im = enhancer.enhance(1.5)
+
+            # Save image as tempfile
+            localPath = "/tmp/%s" % thumbnail
+            final_im.save(localPath, "JPEG", quality=100)
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
