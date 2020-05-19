@@ -3,7 +3,7 @@ import sys
 import datetime
 import boto3
 import tempfile
-from PIL import Image
+from PIL import Image, ImageEnhance
 sys.path.append("%s/utils" % (os.getcwd()))
 import dynamodb
       
