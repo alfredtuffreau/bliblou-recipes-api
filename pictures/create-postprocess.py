@@ -70,11 +70,11 @@ def main(event, context):
 
             # Enhance contrast after resize
             enhancer = ImageEnhance.Contrast(resized_im)
-            contrasted_im = enhancer.enhance(1)
+            contrasted_im = enhancer.enhance(1.1)
 
             # Enhance brightness after resize
             enhancer = ImageEnhance.Brightness(contrasted_im)
-            final_im = enhancer.enhance(1)
+            final_im = enhancer.enhance(1.1)
 
             # Save image as tempfile
             localPath = "/tmp/%s" % thumbnail
