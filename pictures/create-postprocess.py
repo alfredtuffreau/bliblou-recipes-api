@@ -72,25 +72,28 @@ def main(event, context):
             while contrast <= 1.6:
               brightness = 0.8
               while brightness <= 1.6:
+                # Enhance contrast after resize
+                enhancer = ImageEnhance.Contrast(resized_im)
+                contrasted_im = enhancer.enhance(contrast)
 
-              # Enhance contrast after resize
-              enhancer = ImageEnhance.Contrast(resized_im)
-              contrasted_im = enhancer.enhance(contrast)
+                # Enhance brightness after resize
+                enhancer = ImageEnhance.Brightness(contrasted_im)
+                final_im = enhancer.enhance(brightness)
 
-              # Enhance brightness after resize
-              enhancer = ImageEnhance.Brightness(contrasted_im)
-              final_im = enhancer.enhance(brightness)
+                # Save image as tempfile
+                localPath = "/tmp/%s" % thumbnail
+                final_im.save(localPath, "JPEG", quality=100)
 
-              # Save image as tempfile
-              localPath = "/tmp/%s" % thumbnail
-              final_im.save(localPath, "JPEG", quality=100)
-
-              # Upload resized image to S3 and record it as added thumbnail
-              with open(localPath, "rb") as f:
-                print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
-                s3Path = "thumbnails/" + file + "_%dx%d_contrast%.1f_brightness%.1f.jpeg" % (width, height, contrast, brightness)
-                s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-                addedThumbnails.append(s3Path)
+                # Upload resized image to S3 and record it as added thumbnail
+                with open(localPath, "rb") as f:
+                  print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
+                  s3Path = "thumbnails/" + file + "_%dx%d_contrast%.1f_brightness%.1f.jpeg" % (width, height, contrast, brightness)
+                  s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+                  addedThumbnails.append(s3Path)
+                
+                brightness = brightness + .1
+                
+              contrast = contrast + .1
 
             # Update while conditions
             width, height = width * 2, height * 2
