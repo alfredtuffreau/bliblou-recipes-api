@@ -55,7 +55,7 @@ def main(event, context):
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
 
-          print "The size of the Image is: "
+          print("The size of the Image is: ")
           print(im.format, im.size, im.mode)
           
           # Compute the min thumbnail size
