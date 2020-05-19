@@ -54,6 +54,9 @@ def main(event, context):
           f.seek(0)
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
+
+          print "The size of the Image is: "
+          print(im.format, im.size, im.mode)
           
           # Compute the min thumbnail size
           if im.width / im.height >= thumbnailWidth / thumbnailHeight:
@@ -68,10 +71,10 @@ def main(event, context):
             localPath = "/tmp/%s" % thumbnail
             resized_im = im.resize((width, height), Image.ANTIALIAS)
 
-            contrast = 0.8
-            while contrast <= 1.6:
-              brightness = 0.8
-              while brightness <= 1.6:
+            contrast = 1
+            while contrast <= 1.3:
+              brightness = 1
+              while brightness <= 1.3:
                 # Enhance contrast after resize
                 enhancer = ImageEnhance.Contrast(resized_im)
                 contrasted_im = enhancer.enhance(contrast)
