@@ -55,9 +55,9 @@ def main(event, context):
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
 
-          filename = file + "_copy." + ext
+          filename = file + "_copy.png
           localPath = "/tmp/%s" % filename
-          im.save(localPath, quality=100, subsampling=0)
+          im.save(localPath, "PNG", quality=100, subsampling=0)
           with open(localPath, "rb") as f:
             print("%s - uploading %s to thumbnails/ in %s" % (eventId, filename, bucket))
             s3Path = "thumbnails/%s" % filename
