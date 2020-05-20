@@ -57,7 +57,7 @@ def main(event, context):
 
           filename = file + "_copy.png"
           localPath = "/tmp/%s" % filename
-          im.resize((im.width/2, im.height/2), Image.ANTIALIAS).save(localPath, "PNG", quality=100, subsampling=0)
+          im.resize((int(im.width/2), int(im.height/2)), Image.ANTIALIAS).save(localPath, "PNG", quality=100, subsampling=0)
 
           with open(localPath, "rb") as f:
             print("%s - uploading %s to thumbnails/ in %s" % (eventId, filename, bucket))
