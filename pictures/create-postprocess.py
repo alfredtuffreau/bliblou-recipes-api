@@ -54,47 +54,29 @@ def main(event, context):
           f.seek(0)
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
-
-          filename = file + "_copy.png"
-          localPath = "/tmp/%s" % filename
-          im.resize((int(im.width/2), int(im.height/2)), Image.ANTIALIAS).save(localPath, "PNG", quality=95)
-
-          with open(localPath, "rb") as f:
-            print("%s - uploading %s to thumbnails/ in %s" % (eventId, filename, bucket))
-            s3Path = "thumbnails/%s" % filename
-            s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-            addedThumbnails.append(s3Path)
           
           # Compute the min thumbnail size
-          # if im.width / im.height >= thumbnailWidth / thumbnailHeight:
-          #   width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
-          # else:
-          #   width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
+          if im.width / im.height >= thumbnailWidth / thumbnailHeight:
+            width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
+          else:
+            width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
             
           # Resize image with size < original size
-          # while width < im.width and height < im.height:
-          #   print("%s - create %d x %d thumbnail" % (eventId, width, height))
-          #   thumbnail = file + "_%dx%d.jpeg" % (width, height)
-          #   localPath = "/tmp/%s" % thumbnail
-          #   im.resize((width, height), Image.ANTIALIAS).save(localPath, "JPEG", quality=95)
-
-            # Enhance contrast after resize
-            # enhancer = ImageEnhance.Contrast(resized_im)
-            # contrasted_im = enhancer.enhance(1.2)
-
-            # Enhance brightness after resize
-            # enhancer = ImageEnhance.Brightness(contrasted_im)
-            # final_im = enhancer.enhance(1)
+          while width < im.width and height < im.height:
+            print("%s - create %d x %d thumbnail" % (eventId, width, height))
+            thumbnail = file + "_%dx%d.png" % (width, height)
+            localPath = "/tmp/%s" % thumbnail
+            im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", quality=95)
 
             # Upload resized image to S3 and record it as added thumbnail
-            # with open(localPath, "rb") as f:
-            #   print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
-            #   s3Path = "thumbnails/%s" % thumbnail
-            #   s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-            #   addedThumbnails.append(s3Path)
+            with open(localPath, "rb") as f:
+              print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
+              s3Path = "thumbnails/%s" % thumbnail
+              s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+              addedThumbnails.append(s3Path)
 
             # Update while conditions
-            # width, height = width * 2, height * 2
+            width, height = width * 2, height * 2
 
         # Update recipe with added thumbnails
         if addedThumbnails:
