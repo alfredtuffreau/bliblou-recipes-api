@@ -3,7 +3,7 @@ import sys
 import datetime
 import boto3
 import tempfile
-from PIL import Image, ImageEnhance
+from PIL import Image
 sys.path.append("%s/utils" % (os.getcwd()))
 import dynamodb
       
@@ -55,51 +55,45 @@ def main(event, context):
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
 
-          print("The size of the Image is: ")
-          print(im.format, im.size, im.mode)
+          filename = file + "_copy.jpeg"
+          localPath = "/tmp/%s" % filename
+          im.save(localPath, "JPEG", quality=95)
+          with open(localPath, "rb") as f:
+            print("%s - uploading %s to thumbnails/ in %s" % (eventId, filename, bucket))
+            s3Path = "copy/%s" % filename
+            s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+            addedThumbnails.append(s3Path)
           
           # Compute the min thumbnail size
-          if im.width / im.height >= thumbnailWidth / thumbnailHeight:
-            width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
-          else:
-            width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
+          # if im.width / im.height >= thumbnailWidth / thumbnailHeight:
+          #   width, height = int(im.width * thumbnailHeight / im.height), thumbnailHeight
+          # else:
+          #   width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
             
           # Resize image with size < original size
-          while width < im.width and height < im.height:
-            print("%s - create %d x %d thumbnail" % (eventId, width, height))
-            thumbnail = file + "_%dx%d.jpeg" % (width, height)
-            localPath = "/tmp/%s" % thumbnail
-            resized_im = im.resize((width, height), Image.ANTIALIAS)
+          # while width < im.width and height < im.height:
+          #   print("%s - create %d x %d thumbnail" % (eventId, width, height))
+          #   thumbnail = file + "_%dx%d.jpeg" % (width, height)
+          #   localPath = "/tmp/%s" % thumbnail
+          #   im.resize((width, height), Image.ANTIALIAS).save(localPath, "JPEG", quality=95)
 
-            contrast = 1
-            while contrast <= 1.3:
-              brightness = 1
-              while brightness <= 1.3:
-                # Enhance contrast after resize
-                enhancer = ImageEnhance.Contrast(resized_im)
-                contrasted_im = enhancer.enhance(contrast)
+            # Enhance contrast after resize
+            # enhancer = ImageEnhance.Contrast(resized_im)
+            # contrasted_im = enhancer.enhance(1.2)
 
-                # Enhance brightness after resize
-                enhancer = ImageEnhance.Brightness(contrasted_im)
-                final_im = enhancer.enhance(brightness)
+            # Enhance brightness after resize
+            # enhancer = ImageEnhance.Brightness(contrasted_im)
+            # final_im = enhancer.enhance(1)
 
-                # Save image as tempfile
-                localPath = "/tmp/%s" % thumbnail
-                final_im.save(localPath, "JPEG", quality=100)
-
-                # Upload resized image to S3 and record it as added thumbnail
-                with open(localPath, "rb") as f:
-                  print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
-                  s3Path = "thumbnails/" + file + "_%dx%d_contrast%.1f_brightness%.1f.jpeg" % (width, height, contrast, brightness)
-                  s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-                  addedThumbnails.append(s3Path)
-                
-                brightness = brightness + .1
-                
-              contrast = contrast + .1
+            # Upload resized image to S3 and record it as added thumbnail
+            # with open(localPath, "rb") as f:
+            #   print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
+            #   s3Path = "thumbnails/%s" % thumbnail
+            #   s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+            #   addedThumbnails.append(s3Path)
 
             # Update while conditions
-            width, height = width * 2, height * 2
+            # width, height = width * 2, height * 2
 
         # Update recipe with added thumbnails
         if addedThumbnails:
