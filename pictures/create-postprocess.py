@@ -55,7 +55,7 @@ def main(event, context):
           file, ext = os.path.splitext(os.path.basename(picture))
           im = Image.open(f)
 
-          filename = file + "_copy.png
+          filename = file + "_copy.png"
           localPath = "/tmp/%s" % filename
           im.save(localPath, "PNG", quality=100, subsampling=0)
           with open(localPath, "rb") as f:
