@@ -66,7 +66,7 @@ def main(event, context):
             print("%s - create %s%s %d x %d thumbnail" % (eventId, file, ext, width, height))
             thumbnail = file + "_%dx%d.png" % (width, height)
             localPath = "/tmp/%s" % thumbnail
-            im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=85)
+            im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
