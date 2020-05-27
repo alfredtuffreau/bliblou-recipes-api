@@ -64,21 +64,22 @@ def main(event, context):
             width, height = thumbnailWidth, int(im.height * thumbnailWidth / im.width)
             
           # Resize image with size < original size
-          while width < im.width and height < im.height:
+          thumbnailIsBigger = False
+          while width < im.width and height < im.height and not thumbnailIsBigger:
             print("%s - create %s%s %d x %d thumbnail" % (eventId, file, ext, width, height))
             thumbnail = file + "_%dx%d.png" % (width, height)
             localPath = "/tmp/%s" % thumbnail
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
-            thumbnail_size = os.stat(localPath).st_size
-            print("%s size = %s (original size = %s)" % (thumbnail, thumbnail_size, original_size))
-
-            # Upload resized image to S3 and record it as added thumbnail
-            with open(localPath, "rb") as f:
-              print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
-              s3Path = "thumbnails/%s" % thumbnail
-              s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
-              addedThumbnails.append(s3Path)
+            # Upload resized image to S3 and record it as added thumbnail if size < original size
+            if int(original_size) > int(os.stat(localPath).st_size)
+              with open(localPath, "rb") as f:
+                print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
+                s3Path = "thumbnails/%s" % thumbnail
+                s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
+                addedThumbnails.append(s3Path)
+            else: 
+              thumbnailIsBigger = True
 
             # Update while conditions
             width, height = width * 2, height * 2
