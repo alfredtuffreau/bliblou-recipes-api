@@ -53,6 +53,8 @@ def main(event, context):
           s3.meta.client.download_fileobj(bucket, picture, f)
           f.seek(0)
           file, ext = os.path.splitext(os.path.basename(picture))
+          original_size = os.stat(f).st_size
+          print("Original size = %f" % original_size)
           im = Image.open(f)
           
           # Compute the min thumbnail size
@@ -67,6 +69,9 @@ def main(event, context):
             thumbnail = file + "_%dx%d.png" % (width, height)
             localPath = "/tmp/%s" % thumbnail
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
+
+            thumbnail_size = os.stat(localPath).st_size
+            print("%s size = %f" % (thumbnail, thumbnail_size))
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
