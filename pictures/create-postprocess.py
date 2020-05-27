@@ -71,7 +71,7 @@ def main(event, context):
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
             thumbnail_size = os.stat(localPath).st_size
-            print("%s size = %s (original size = %d)" % (thumbnail, thumbnail_size, original_size))
+            print("%s size = %s (original size = %s)" % (thumbnail, thumbnail_size, original_size))
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
