@@ -50,7 +50,7 @@ def main(event, context):
         with tempfile.TemporaryFile() as f:
           picture = "public/%s" % record["dynamodb"]["NewImage"]["picture"]["S"]
           print("%s - downloading %s from %s to tempfile..." % (eventId, picture, bucket))
-          original_size = s3.meta.client.head_object(bucket, picture).ContentLength
+          original_size = s3.meta.client.head_object(Bucket=bucket, Key=picture).ContentLength
           s3.meta.client.download_fileobj(bucket, picture, f)
           f.seek(0)
           file, ext = os.path.splitext(os.path.basename(picture))
@@ -70,7 +70,7 @@ def main(event, context):
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
             thumbnail_size = os.stat(localPath).st_size
-            print("%s size = %f (original size = %f" % (thumbnail, thumbnail_size, original_size))
+            print("%s size = %d (original size = %d)" % (thumbnail, thumbnail_size, original_size))
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
