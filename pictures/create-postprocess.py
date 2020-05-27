@@ -72,7 +72,7 @@ def main(event, context):
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
             # Upload resized image to S3 and record it as added thumbnail if size < original size
-            if int(original_size) > int(os.stat(localPath).st_size)
+            if int(original_size) > int(os.stat(localPath).st_size):
               with open(localPath, "rb") as f:
                 print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
                 s3Path = "thumbnails/%s" % thumbnail
