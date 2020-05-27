@@ -63,10 +63,10 @@ def main(event, context):
             
           # Resize image with size < original size
           while width < im.width and height < im.height:
-            print("%s - create %d x %d thumbnail" % (eventId, width, height))
+            print("%s - create %s%s %d x %d thumbnail" % (eventId, file, ext, width, height))
             thumbnail = file + "_%dx%d.png" % (width, height)
             localPath = "/tmp/%s" % thumbnail
-            im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", quality=95)
+            im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=85)
 
             # Upload resized image to S3 and record it as added thumbnail
             with open(localPath, "rb") as f:
