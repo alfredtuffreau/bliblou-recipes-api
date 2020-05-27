@@ -79,6 +79,7 @@ def main(event, context):
                 s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
                 addedThumbnails.append(s3Path)
             else: 
+              print("%s - not uploading %s to thumbnails/ in %s (too big). Resize will stop" % (eventId, thumbnail, bucket))
               thumbnailIsBigger = True
 
             # Update while conditions
