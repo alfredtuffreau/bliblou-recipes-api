@@ -50,7 +50,7 @@ def main(event, context):
         with tempfile.TemporaryFile() as f:
           picture = "public/%s" % record["dynamodb"]["NewImage"]["picture"]["S"]
           print("%s - downloading %s from %s to tempfile..." % (eventId, picture, bucket))
-          original_size = s3.meta.client.head_object(Bucket=bucket, Key=picture).ContentLength
+          original_size = s3.meta.client.head_object(Bucket=bucket, Key=picture).["ContentLength"]
           s3.meta.client.download_fileobj(bucket, picture, f)
           f.seek(0)
           file, ext = os.path.splitext(os.path.basename(picture))
