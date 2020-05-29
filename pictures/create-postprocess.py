@@ -50,7 +50,6 @@ def main(event, context):
         with tempfile.TemporaryFile() as f:
           picture = "public/%s" % record["dynamodb"]["NewImage"]["picture"]["S"]
           print("%s - downloading %s from %s to tempfile..." % (eventId, picture, bucket))
-          print(s3.meta.client.head_object(Bucket=bucket, Key=picture)["ResponseMetadata"]["HTTPHeaders"]["content-length"])
           original_size = s3.meta.client.head_object(Bucket=bucket, Key=picture)["ResponseMetadata"]["HTTPHeaders"]["content-length"]
           s3.meta.client.download_fileobj(bucket, picture, f)
           f.seek(0)
@@ -72,14 +71,15 @@ def main(event, context):
             im.resize((width, height), Image.ANTIALIAS).save(localPath, "PNG", optimize=True, quality=75)
 
             # Upload resized image to S3 and record it as added thumbnail if size < original size
-            if int(original_size) > int(os.stat(localPath).st_size):
+            new_size = os.stat(localPath).st_size
+            if int(original_size) > int(new_size):
               with open(localPath, "rb") as f:
                 print("%s - uploading %s to thumbnails/ in %s" % (eventId, thumbnail, bucket))
                 s3Path = "thumbnails/%s" % thumbnail
                 s3.meta.client.upload_fileobj(f, bucket, "public/%s" % s3Path)
                 addedThumbnails.append(s3Path)
             else: 
-              print("%s - not uploading %s to thumbnails/ in %s (too big). Resize will stop" % (eventId, thumbnail, bucket))
+              print("%s - not uploading %s to thumbnails/ in %s (too big: new_size=%s / original_size=%s). Resize will stop" % (eventId, thumbnail, bucket, new_size, original_size))
               thumbnailIsBigger = True
 
             # Update while conditions
