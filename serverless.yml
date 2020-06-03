@@ -98,6 +98,14 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam
+  validate:
+    handler: recipes-api/validate.main
+    events:
+      - http:
+          path: recipes/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
   delete:
     handler: recipes-api/delete.main
     events:
