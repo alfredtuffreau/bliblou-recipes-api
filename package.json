@@ -23,6 +23,6 @@
     "serverless-python-requirements": "^3.0.9"
   },
   "devDependencies": {
-    "aws-sdk": "^2.571.0"
+    "aws-sdk": "^2.814.0"
   }
 }
